@@ -6,6 +6,8 @@ import (
 
 type ConsumeCallback func(body []byte) error
 
+// Consume starts consumming from queueName identified as tag.
+// Returns an amqp.Delivery type channel to consume messages from.
 func (c *Connection) Consume(queueName string, tag string) (<-chan amqp.Delivery, error) {
 
 	messages, err := c.channel.Consume(
@@ -24,6 +26,8 @@ func (c *Connection) Consume(queueName string, tag string) (<-chan amqp.Delivery
 	return messages, nil
 }
 
+// ConsumeWithCallback starts consumming from queueName identified as tag.
+// Every message content is passed to cb.
 func (c *Connection) ConsumeWithCallback(queueName string, tag string, cb ConsumeCallback) error {
 
 	messages, err := c.Consume(queueName, tag)

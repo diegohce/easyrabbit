@@ -5,6 +5,7 @@ import (
 	"log"
 )
 
+// Connection represents a connection to an AMQP server.
 type Connection struct {
 	amqpURI     string
 	contentType string
@@ -13,6 +14,7 @@ type Connection struct {
 	notiClose   chan *amqp.Error
 }
 
+// New constructs a new connection with the given AMQP Uri.
 func New(uri string) (*Connection, error) {
 
 	c := &Connection{
@@ -27,11 +29,23 @@ func New(uri string) (*Connection, error) {
 	return c, nil
 }
 
+// Close closes an established connection.
 func (c *Connection) Close() {
 	if c.connection != nil {
 		//close(c.notiClose)
 		c.connection.Close()
 	}
+}
+
+// SetContentType sets AMQP content type attribute.
+// Default: "text/plain"
+func (c *Connection) SetContentType(contentType string) {
+	c.contentType = contentType
+}
+
+// ContentType returns the content type this connection will use to send messages to the AMQP server.
+func (c *Connection) ContentType() string {
+	return c.contentType
 }
 
 func (c *Connection) connect() error {

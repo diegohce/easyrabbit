@@ -4,6 +4,7 @@ import (
 	"github.com/streadway/amqp"
 )
 
+// Publish send body to the AMQP server, publishin into exchange using routingKey.
 func (c *Connection) Publish(exchange, routingKey string, body []byte) error {
 
 	err := c.channel.Publish(

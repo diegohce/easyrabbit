@@ -22,4 +22,3 @@ func (c *Connection) Publish(exchange, routingKey string, body []byte) error {
 	)
 	return err
 }
-

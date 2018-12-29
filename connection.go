@@ -34,7 +34,6 @@ func (c *Connection) Close() {
 	}
 }
 
-
 func (c *Connection) connect() error {
 
 	var err error

@@ -4,18 +4,18 @@ import (
 	"github.com/streadway/amqp"
 )
 
-type ConsumeCallback func(body []byte)error
+type ConsumeCallback func(body []byte) error
 
 func (c *Connection) Consume(queueName string, tag string) (<-chan amqp.Delivery, error) {
 
 	messages, err := c.channel.Consume(
-		queueName,  // name
-		tag,        // consumerTag,
-		false,      // noAck
-		false,      // exclusive
-		false,      // noLocal
-		false,      // noWait
-		nil,        // arguments
+		queueName, // name
+		tag,       // consumerTag,
+		false,     // noAck
+		false,     // exclusive
+		false,     // noLocal
+		false,     // noWait
+		nil,       // arguments
 	)
 	if err != nil {
 		return nil, err

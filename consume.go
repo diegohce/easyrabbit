@@ -28,20 +28,41 @@ func (c *Connection) Consume(queueName string, tag string) (<-chan amqp.Delivery
 
 // ConsumeWithCallback starts consumming from queueName identified as tag.
 // Every message content is passed to cb.
-func (c *Connection) ConsumeWithCallback(queueName string, tag string, cb ConsumeCallback) error {
+//
+// Send 'true' to the returned channel to stop the consumer goroutine.
+func (c *Connection) ConsumeWithCallback(queueName, tag string, cb ConsumeCallback) (chan bool, error) {
+
+	stopConsumer := make(chan bool)
 
 	messages, err := c.Consume(queueName, tag)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	go func() {
+	/*go func() {
 		for msg := range messages {
 			if err := cb(msg.Body); err == nil {
 				msg.Ack(false)
 			}
 		}
+	}()*/
+
+	go func() {
+		for {
+			select {
+				case stop := <-stopConsumer:
+					if stop {
+						return
+					}
+				case msg := <-messages:
+				{
+					if err := cb(msg.Body); err == nil {
+						msg.Ack(false)
+					}
+				}
+			}
+		}
 	}()
 
-	return nil
+	return stopConsumer, nil
 }

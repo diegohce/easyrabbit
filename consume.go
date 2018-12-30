@@ -4,6 +4,7 @@ import (
 	"github.com/streadway/amqp"
 )
 
+// ConsumeCallback type for callback function on ConsumeWithCallback.
 type ConsumeCallback func(body []byte) error
 
 // Consume starts consumming from queueName identified as tag.
@@ -50,11 +51,11 @@ func (c *Connection) ConsumeWithCallback(queueName, tag string, cb ConsumeCallba
 	go func() {
 		for {
 			select {
-				case stop := <-stopConsumer:
-					if stop {
-						return
-					}
-				case msg := <-messages:
+			case stop := <-stopConsumer:
+				if stop {
+					return
+				}
+			case msg := <-messages:
 				{
 					if err := cb(msg.Body); err == nil {
 						msg.Ack(false)

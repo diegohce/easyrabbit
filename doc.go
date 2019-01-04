@@ -7,7 +7,7 @@
 Package easyrabbit is a simplified RabbitMQ client encapsulation
 of https://github.com/streadway/amqp package.
 
-Use cases are the simple and most common tasks of publish / consume 
+Use cases are the simple and most common tasks of publish / consume
 messages from / to RabbitMQ server.
 
 Understand the AMQP 0.9.1 messaging model by reviewing these links first.
@@ -25,7 +25,7 @@ Use Case
 It's important as a client to an AMQP topology to ensure the state of the
 broker matches your expectations.  For both publish and consume use cases,
 make sure you declare the queues, exchanges and bindings you expect to exist
-prior to calling Connection.Publish or Connection.Consume 
+prior to calling Connection.Publish or Connection.Consume
 or Connection.ConsumeWithCallback.
 
   // Connections start with easyrabbit.New() typically from a command line argument

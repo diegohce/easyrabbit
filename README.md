@@ -7,7 +7,7 @@
 
 # easyrabbit
 
-This Go package is a simplified encapsulation of [streadway/amqp package](https://github.com/streadway/amqp) for most common uses such as simple publishing and consuming messages from rabbitmq-server.
+This Go package is a simplified encapsulation of [streadway/amqp package](https://github.com/streadway/amqp) for most common uses such as simple publishing and consuming messages from rabbitmq-server. It is in a "work in progress" status yet so, stay tuned!
 
 # Examples
 

@@ -5,6 +5,9 @@ import (
 )
 
 // ConsumeCallback type for callback function on ConsumeWithCallback.
+// Returned error:
+// if error == nil, message will be AKed to the broker.
+// else, message will be UNAKed.
 type ConsumeCallback func(body []byte) error
 
 // Consume starts consumming from queueName identified as tag.

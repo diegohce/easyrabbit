@@ -2,8 +2,17 @@ package easyrabbit
 
 import (
 	"github.com/streadway/amqp"
-	"log"
+	golog "log"
+	"os"
 )
+
+var (
+	log *golog.Logger
+)
+
+func init() {
+	log = golog.New(os.Stdout, "easyrabbit::", golog.LstdFlags)
+}
 
 // Connection represents a connection to an AMQP server.
 type Connection struct {

@@ -5,7 +5,6 @@ import (
 )
 
 func ExampleConnection_Publish() {
-
 	erc, err := easyrabbit.New("amqp://guest:guest@localhost/demo")
 	if err != nil {
 		// do something with err
@@ -18,7 +17,6 @@ func ExampleConnection_Publish() {
 }
 
 func ExampleConnection_SetContentType() {
-
 	erc, err := easyrabbit.New("amqp://guest:guest@localhost/demo")
 	if err != nil {
 		// do something with err
@@ -29,7 +27,6 @@ func ExampleConnection_SetContentType() {
 }
 
 func ExampleConnection_ConsumeWithCallback() {
-
 	erc, err := easyrabbit.New("amqp://guest:guest@localhost/demo")
 	if err != nil {
 		// do something with err

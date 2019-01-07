@@ -38,6 +38,13 @@ or Connection.ConsumeWithCallback.
 
 SSL/TLS - Secure connections
 
-Supported by the underlying package, but not fully implemented on easyrabbit (yet).
+When New() encounters an amqps:// scheme, it will use the zero value of a
+tls.Config.  This will only perform server certificate and host verification.
+Use NewTLS() when you wish to provide a client certificate (recommended),
+include a private certificate authority's certificate in the cert chain for
+server validity, or run insecure by not verifying the server certificate dial
+your own connection.
+
+SSL/TLS in RabbitMQ is documented here: http://www.rabbitmq.com/ssl.html
 */
 package easyrabbit

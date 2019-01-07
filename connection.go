@@ -1,6 +1,7 @@
 package easyrabbit
 
 import (
+	"crypto/tls"
 	"github.com/streadway/amqp"
 	golog "log"
 	"os"
@@ -21,14 +22,34 @@ type Connection struct {
 	connection  *amqp.Connection
 	channel     *amqp.Channel
 	notiClose   chan *amqp.Error
+	tlsconfig   *tls.Config
 }
 
 // New constructs a new connection with the given AMQP Uri.
+// AMQP URI: scheme://user:pasword@amqphost/virtualhost
+//    amqp[s]://guest:guest@localhost/test
 func New(uri string) (*Connection, error) {
 
 	c := &Connection{
 		amqpURI:     uri,
 		contentType: "text/plain",
+		tlsconfig:   nil,
+	}
+
+	if err := c.connect(); err != nil {
+		return nil, err
+	}
+
+	return c, nil
+}
+
+// NewTLS constructs a new secure connection with the given AMQP Uri.
+func NewTLS(uri string, tlsconfig *tls.Config) (*Connection, error) {
+
+	c := &Connection{
+		amqpURI:     uri,
+		contentType: "text/plain",
+		tlsconfig:   tlsconfig,
 	}
 
 	if err := c.connect(); err != nil {
@@ -61,10 +82,15 @@ func (c *Connection) connect() error {
 
 	var err error
 
-	if c.connection, err = amqp.Dial(c.amqpURI); err != nil {
-		return err
+	if c.tlsconfig == nil {
+		if c.connection, err = amqp.Dial(c.amqpURI); err != nil {
+			return err
+		}
+	} else {
+		if c.connection, err = amqp.DialTLS(c.amqpURI, c.tlsconfig); err != nil {
+			return err
+		}
 	}
-
 	if c.channel, err = c.connection.Channel(); err != nil {
 		c.connection.Close()
 		return err

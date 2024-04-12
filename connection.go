@@ -2,9 +2,11 @@ package easyrabbit
 
 import (
 	"crypto/tls"
-	"github.com/streadway/amqp"
+	//"github.com/streadway/amqp"
 	golog "log"
 	"os"
+
+	amqp "github.com/rabbitmq/amqp091-go"
 )
 
 var (
@@ -27,7 +29,8 @@ type Connection struct {
 
 // New constructs a new connection with the given AMQP Uri.
 // AMQP URI: scheme://user:pasword@amqphost/virtualhost
-//    amqp[s]://guest:guest@localhost/test
+//
+//	amqp[s]://guest:guest@localhost/test
 func New(uri string) (*Connection, error) {
 
 	c := &Connection{

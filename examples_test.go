@@ -13,7 +13,7 @@ func ExampleConnection_Publish() {
 
 	messageBody := "Hello, World!"
 
-	erc.Publish("myExchangeName", "easyrabbit pub demo", []byte(message))
+	erc.Publish("myExchangeName", "easyrabbit pub demo", []byte(messageBody))
 }
 
 func ExampleConnection_SetContentType() {

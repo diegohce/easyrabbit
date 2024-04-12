@@ -1,7 +1,8 @@
 package easyrabbit
 
 import (
-	"github.com/streadway/amqp"
+	//"github.com/streadway/amqp"
+	amqp "github.com/rabbitmq/amqp091-go"
 )
 
 // Publish send body to the AMQP server, publishin into exchange using routingKey.
